@@ -1,39 +1,33 @@
-package com.example.app_fast_food.user.entity;
-
+package com.example.app_fast_food.user.dto;
 
 import com.example.app_fast_food.check.entity.Check;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import java.util.List;
-import java.util.UUID;
 
-@Entity
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
-@Table(name = "`user`")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+public class UserDTO {
 
     @Column(unique = true)
-    @NonNull @NotBlank
+    @NotBlank @NotNull
     private String phoneNumber;
 
-    @NonNull @NotBlank
+    @NotBlank @NotNull
     private String name;
 
-    @NotNull @NotBlank
+    @NotBlank  @NonNull
     private String password;
 
 /*    @Enumerated(EnumType.STRING)
     private StatusEnum status;*/
 
-    @OneToMany(mappedBy = "user")
     private List<Check> check;
 }
