@@ -2,6 +2,7 @@ package com.example.app_fast_food.product;
 
 import com.example.app_fast_food.common.mapper.GenericMapper;
 import com.example.app_fast_food.common.repository.GenericRepository;
+import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.common.service.GenericService;
 import com.example.app_fast_food.product.dto.ProductCreateDTO;
 import com.example.app_fast_food.product.dto.ProductResponseDTO;
@@ -23,12 +24,12 @@ public class ProductService extends GenericService<Product , UUID , ProductRespo
     private final ProductDTOMapper mapper;
 
     @Override
-    protected ProductResponseDTO internalCreate(ProductCreateDTO productCreateDTO) {
+    protected CommonResponse<ProductResponseDTO> internalCreate(ProductCreateDTO productCreateDTO) {
         return null;
     }
 
     @Override
-    protected ProductResponseDTO internalUpdate(UUID uuid, ProductUpdateDTO productUpdateDTO) {
+    protected CommonResponse<ProductResponseDTO> internalUpdate(UUID uuid, ProductUpdateDTO productUpdateDTO) {
         return null;
     }
 }

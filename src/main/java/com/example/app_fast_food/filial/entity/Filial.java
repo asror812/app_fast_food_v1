@@ -37,6 +37,9 @@ public class Filial {
     @NotBlank
     private Double longitude;
 
+    @Enumerated(EnumType.STRING)
+    private Region region;
+
     @NonNull
     @NotBlank
     private Double latitude;

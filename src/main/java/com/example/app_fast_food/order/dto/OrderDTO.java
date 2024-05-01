@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 public class OrderDTO {
 
-    @OneToMany(cascade = CascadeType.ALL)
+
     private List<OrderItem> orderItem;
 
     @Enumerated(EnumType.STRING)

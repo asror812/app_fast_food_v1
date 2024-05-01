@@ -2,6 +2,7 @@ package com.example.app_fast_food.filial;
 
 import com.example.app_fast_food.common.mapper.GenericMapper;
 import com.example.app_fast_food.common.repository.GenericRepository;
+import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.common.service.GenericService;
 import com.example.app_fast_food.filial.dto.FilialCreateDTO;
 import com.example.app_fast_food.filial.dto.FilialResponseDTO;
@@ -31,12 +32,12 @@ public class FilialService extends GenericService<Filial , UUID , FilialResponse
     }
 
     @Override
-    protected FilialResponseDTO internalCreate(FilialCreateDTO filialCreateDTO) {
+    protected CommonResponse<FilialResponseDTO> internalCreate(FilialCreateDTO filialCreateDTO) {
         return null;
     }
 
     @Override
-    protected FilialResponseDTO internalUpdate(UUID uuid, FilialUpdateDTO filialUpdateDTO) {
+    protected CommonResponse<FilialResponseDTO> internalUpdate(UUID uuid, FilialUpdateDTO filialUpdateDTO) {
         return null;
     }
 }

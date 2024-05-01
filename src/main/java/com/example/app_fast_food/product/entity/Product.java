@@ -1,6 +1,8 @@
 package com.example.app_fast_food.product.entity;
 
 
+import com.example.app_fast_food.category.entity.Category;
+import com.example.app_fast_food.discount.Discount;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -42,6 +45,19 @@ public class Product {
     private Integer weight;
 
     private Long sold;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "product_discount",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "discount_id")
+    )
+    private List<Discount> discounts;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 
 }

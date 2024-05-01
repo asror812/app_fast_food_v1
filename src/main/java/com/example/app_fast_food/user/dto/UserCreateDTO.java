@@ -1,4 +1,10 @@
 package com.example.app_fast_food.user.dto;
 
-public class UserCreateDTO {
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+public class UserCreateDTO extends UserDTO {
+
 }

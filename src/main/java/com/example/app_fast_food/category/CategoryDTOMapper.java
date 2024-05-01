@@ -2,7 +2,6 @@ package com.example.app_fast_food.category;
 
 
 import com.example.app_fast_food.category.dto.CategoryCreateDTO;
-import com.example.app_fast_food.category.dto.CategoryDTO;
 import com.example.app_fast_food.category.dto.CategoryResponseDTO;
 import com.example.app_fast_food.category.dto.CategoryUpdateDTO;
 import com.example.app_fast_food.category.entity.Category;

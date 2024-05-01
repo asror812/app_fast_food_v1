@@ -25,6 +25,6 @@ public class Category {
 
     private String subCategory;
 
-    @OneToMany
-    private List<Product> productList;
+    @OneToMany(mappedBy = "category" )
+    private List<Product> products;
 }

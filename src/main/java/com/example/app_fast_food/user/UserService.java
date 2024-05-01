@@ -10,7 +10,7 @@ import com.example.app_fast_food.user.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
+/*
 @Service
 public class UserService extends GenericService<User, UUID , UserResponseDTO, UserCreateDTO, UserUpdateDTO> {
     @Override
@@ -37,4 +37,4 @@ public class UserService extends GenericService<User, UUID , UserResponseDTO, Us
     protected UserResponseDTO internalUpdate(UUID uuid, UserUpdateDTO userUpdateDTO) {
         return null;
     }
-}
+}*/

@@ -5,8 +5,7 @@ import com.example.app_fast_food.category.dto.CategoryResponseDTO;
 import com.example.app_fast_food.category.entity.Category;
 import com.example.app_fast_food.category.dto.CategoryUpdateDTO;
 import com.example.app_fast_food.category.dto.CategoryCreateDTO;
-import com.example.app_fast_food.common.mapper.GenericMapper;
-import com.example.app_fast_food.common.repository.GenericRepository;
+import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.common.service.GenericService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +23,12 @@ public class CategoryService extends GenericService<Category , UUID , CategoryRe
     private final CategoryDTOMapper mapper;
 
     @Override
-    protected CategoryResponseDTO internalCreate(CategoryCreateDTO categoryCreateDTO) {
+    protected CommonResponse<CategoryResponseDTO> internalCreate(CategoryCreateDTO categoryCreateDTO) {
         return null;
     }
 
     @Override
-    protected CategoryResponseDTO internalUpdate(UUID uuid, CategoryUpdateDTO categoryUpdateDTO) {
+    protected CommonResponse<CategoryResponseDTO> internalUpdate(UUID uuid, CategoryUpdateDTO categoryUpdateDTO) {
         return null;
     }
 }

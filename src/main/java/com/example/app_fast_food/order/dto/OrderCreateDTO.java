@@ -1,4 +1,7 @@
 package com.example.app_fast_food.order.dto;
 
-public class OrderCreateDTO {
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+public class OrderCreateDTO extends OrderDTO {
 }

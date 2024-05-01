@@ -3,6 +3,7 @@ package com.example.app_fast_food.order;
 
 import com.example.app_fast_food.common.mapper.GenericMapper;
 import com.example.app_fast_food.common.repository.GenericRepository;
+import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.common.service.GenericService;
 import com.example.app_fast_food.order.dto.OrderCreateDTO;
 import com.example.app_fast_food.order.dto.OrderResponseDTO;
@@ -25,13 +26,13 @@ public class OrderService extends GenericService<Order, Long , OrderResponseDTO,
 
     //Todo
     @Override
-    protected OrderResponseDTO internalCreate(OrderCreateDTO orderCreateDTO) {
+    protected CommonResponse<OrderResponseDTO> internalCreate(OrderCreateDTO orderCreateDTO) {
         return null;
     }
 
     //Todo
     @Override
-    protected OrderResponseDTO internalUpdate(Long aLong, OrderUpdateDTO orderUpdateDTO) {
+    protected CommonResponse<OrderResponseDTO> internalUpdate(Long aLong, OrderUpdateDTO orderUpdateDTO) {
         return null;
     }
 }
