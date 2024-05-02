@@ -1,7 +1,6 @@
 package com.example.app_fast_food.product.dto;
 
 import com.example.app_fast_food.category.entity.Category;
-import com.example.app_fast_food.discount.Discount;
 import com.example.app_fast_food.product.entity.Product;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -24,7 +24,6 @@ public class ProductController {
 
     @GetMapping("{id}")
     public CommonResponse<ProductResponseDTO> getById(@PathVariable UUID id) {
-
         return productService.getById(id);
     }
 
@@ -37,6 +36,10 @@ public class ProductController {
     public CommonResponse<List<ProductResponseDTO>> getAllByCategory(@PathVariable String categoryName) {
           return productService.getByCategory(categoryName);
     }
+
+    @
+
+    @
 
 
 
