@@ -1,7 +1,5 @@
 package com.example.app_fast_food.product;
 
-import com.example.app_fast_food.common.mapper.GenericMapper;
-import com.example.app_fast_food.common.repository.GenericRepository;
 import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.common.service.GenericService;
 import com.example.app_fast_food.product.dto.ProductCreateDTO;
@@ -12,6 +10,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,11 +24,20 @@ public class ProductService extends GenericService<Product , UUID , ProductRespo
 
     @Override
     protected CommonResponse<ProductResponseDTO> internalCreate(ProductCreateDTO productCreateDTO) {
-        return null;
+
+        Product entity = mapper.toEntity(productCreateDTO);
+        repository.save(entity);
+        return CommonResponse.succeed(mapper.toResponseDTO(entity));
     }
 
     @Override
     protected CommonResponse<ProductResponseDTO> internalUpdate(UUID uuid, ProductUpdateDTO productUpdateDTO) {
         return null;
+    }
+
+    public CommonResponse<List<ProductResponseDTO>> getByCategory(String categoryName) {
+        List<Product> products = repository.findProductsByCategoryName(categoryName);
+
+        return CommonResponse.succeed(products.stream().map(mapper::toResponseDTO).toList());
     }
 }
