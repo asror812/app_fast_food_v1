@@ -1,10 +1,12 @@
 package com.example.app_fast_food.product.entity;
 
 
+import com.example.app_fast_food.attachment.entity.Attachment;
+import com.example.app_fast_food.bonus.Bonus;
 import com.example.app_fast_food.category.entity.Category;
+import com.example.app_fast_food.comment.Comment;
 import com.example.app_fast_food.discount.Discount;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -32,13 +34,6 @@ public class Product {
 
     private Double price;
 
-    @ManyToOne
-    @JoinColumn(name = "bonus_product_id")
-    private Product product_id;
-
-    @Column(name = "required_quantity")
-    private Integer requiredQuantity;
-
     @NotNull @NotBlank
     private String categoryName;
 
@@ -55,9 +50,16 @@ public class Product {
     )
     private List<Discount> discounts;
 
+    @OneToMany(mappedBy = "product")
+    private List<Bonus> bonuses;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @OneToMany(mappedBy = "product")
+    private List<Attachment> attachment;
 
+    @OneToMany(mappedBy = "product")
+    private List<Comment> comments;
 }

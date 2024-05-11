@@ -3,6 +3,7 @@ package com.example.app_fast_food.user.entity;
 
 import com.example.app_fast_food.category.entity.Category;
 import com.example.app_fast_food.check.entity.Check;
+import com.example.app_fast_food.comment.Comment;
 import com.example.app_fast_food.filial.entity.Region;
 import com.example.app_fast_food.role.Role;
 import com.example.app_fast_food.user.Permission;
@@ -46,8 +47,9 @@ public class User implements UserDetails {
     @JoinColumn(name = "catory_id")
     private Category category;
 
-/*    @Enumerated(EnumType.STRING)
-    private StatusEnum status;*/
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comment;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

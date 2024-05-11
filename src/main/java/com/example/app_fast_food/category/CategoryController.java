@@ -26,7 +26,6 @@ public class CategoryController {
 
            CommonResponse<CategoryResponseDTO> categoryResponseDTO = categoryService.create(createDTO);
 
-
            return categoryResponseDTO;
        }
 

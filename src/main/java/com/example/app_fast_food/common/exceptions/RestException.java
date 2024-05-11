@@ -15,4 +15,18 @@ public class RestException extends RuntimeException{
             super(String.format(MESSAGE, className , attribute , id));
         }
     }
+
+    public static class FileSizeLimitExceedException extends RestException{
+        private static final String MESSAGE = "%s file size exceed limit : Limit is %d ";
+        public FileSizeLimitExceedException(String fileName , Long limitSize ){
+            super(String.format(MESSAGE, fileName , limitSize ));
+        }
+    }
+
+    public static class FileNotFound extends RestException{
+        private static final String MESSAGE = "%s file not found in path %s";
+        public FileNotFound(String fileName , String path ){
+            super(String.format(MESSAGE, fileName , path ));
+        }
+    }
 }

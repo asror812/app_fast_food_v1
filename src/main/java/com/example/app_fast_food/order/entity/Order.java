@@ -1,6 +1,7 @@
 package com.example.app_fast_food.order.entity;
 
 
+import com.example.app_fast_food.order.orderItem.OrderItem;
 import com.example.app_fast_food.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

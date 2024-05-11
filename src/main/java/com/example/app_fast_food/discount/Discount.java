@@ -5,25 +5,35 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Table(name = "discount")
+@SQLRestriction("isActive=false")
+@SQLDelete(sql = ("update discount set isActive=true where id=?"))
 public class Discount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
 
     private String  name;
-    private Double percentage;
-    private LocalDate until;
+    private Integer percentage;
+    private LocalDateTime until;
 
+    @Column(name = "required_quantity")
+    private int requiredQuantity;
+
+    private boolean isActive ;
     @ManyToMany(mappedBy = "discounts")
      private List<Product> products;
 }

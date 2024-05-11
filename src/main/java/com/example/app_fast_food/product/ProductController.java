@@ -11,23 +11,22 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/category")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
 
 
-    @PostMapping
+    @PostMapping("/product")
     public CommonResponse<ProductResponseDTO> addProduct(@RequestBody ProductCreateDTO createDTO) {
         return productService.create(createDTO);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("product/{id}")
     public CommonResponse<ProductResponseDTO> getById(@PathVariable UUID id) {
         return productService.getById(id);
     }
 
-    @GetMapping
+    @GetMapping("/products")
     public CommonResponse<List<ProductResponseDTO>> getAll() {
         return productService.getAll();
     }
@@ -37,9 +36,22 @@ public class ProductController {
           return productService.getByCategory(categoryName);
     }
 
-    @
+    @GetMapping("/main")
+    public CommonResponse<List<ProductResponseDTO>> get4PopularProducts(){
+        return productService.get4PopularProducts();
+    }
 
-    @
+    @GetMapping("campaign")
+    public CommonResponse<List<ProductResponseDTO>> getCampaignProducts() {
+        return productService.getCampaignProducts();
+    }
+
+
+
+
+
+
+
 
 
 

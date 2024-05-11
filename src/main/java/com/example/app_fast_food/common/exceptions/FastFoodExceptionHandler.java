@@ -6,13 +6,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class FastFoodExceptionHandler {
     @ExceptionHandler(OtpException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public CommonResponse<String> handleEarlyResentException(OtpException e) {
+        return CommonResponse.fail( e.getMessage() );
+    }
+
+    @ExceptionHandler(RestException.class)
+    @ResponseStatus
+    public CommonResponse<String> handleFileSizeException(RestException e) {
         return CommonResponse.fail( e.getMessage() );
     }
 

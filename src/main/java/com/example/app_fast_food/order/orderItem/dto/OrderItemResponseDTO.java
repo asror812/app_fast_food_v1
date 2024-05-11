@@ -1,4 +1,4 @@
-package com.example.app_fast_food.order.dto;
+package com.example.app_fast_food.order.orderItem.dto;
 
 import lombok.NoArgsConstructor;
 
