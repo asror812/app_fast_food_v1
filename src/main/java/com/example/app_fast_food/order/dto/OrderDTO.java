@@ -1,8 +1,8 @@
 package com.example.app_fast_food.order.dto;
 
 import com.example.app_fast_food.order.orderItem.OrderItem;
-import com.example.app_fast_food.order.entity.OrderStatus;
-import com.example.app_fast_food.order.entity.PaymentType;
+import com.example.app_fast_food.order.OrderStatus;
+import com.example.app_fast_food.order.PaymentType;
 import com.example.app_fast_food.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

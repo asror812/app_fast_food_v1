@@ -3,8 +3,6 @@ package com.example.app_fast_food.attachment;
 
 import com.example.app_fast_food.attachment.entity.Attachment;
 import com.example.app_fast_food.common.repository.GenericRepository;
-import com.example.app_fast_food.product.entity.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +18,9 @@ public interface AttachmentRepository extends GenericRepository<Attachment, UUID
 
    @Query("SELECT at FROM Attachment at WHERE at.product = :productId AND at.isMain = true ")
    Optional<Attachment> findByProduct_IdAndMainIsTrue(UUID productId);
+
+
+   @Query("SELECT at FROM Attachment  at WHERE at.product =: productId AND at.isMain=false ")
+    Optional<Attachment> findByProduct_IdAndMainIsFalse(UUID productId);
 
 }

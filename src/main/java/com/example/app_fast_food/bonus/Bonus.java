@@ -1,7 +1,7 @@
 package com.example.app_fast_food.bonus;
 
 
-import com.example.app_fast_food.product.entity.Product;
+import com.example.app_fast_food.product.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

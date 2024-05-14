@@ -2,9 +2,10 @@ package com.example.app_fast_food.product;
 
 import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.product.dto.ProductCreateDTO;
-import com.example.app_fast_food.product.dto.ProductDTO;
 import com.example.app_fast_food.product.dto.ProductResponseDTO;
+import com.example.app_fast_food.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,10 +22,11 @@ public class ProductController {
         return productService.create(createDTO);
     }
 
-    @GetMapping("product/{id}")
+ /*   @GetMapping("/product/{id}")
     public CommonResponse<ProductResponseDTO> getById(@PathVariable UUID id) {
         return productService.getById(id);
     }
+ */
 
     @GetMapping("/products")
     public CommonResponse<List<ProductResponseDTO>> getAll() {
@@ -41,17 +43,15 @@ public class ProductController {
         return productService.get4PopularProducts();
     }
 
-    @GetMapping("campaign")
+    @GetMapping("/campaign")
     public CommonResponse<List<ProductResponseDTO>> getCampaignProducts() {
         return productService.getCampaignProducts();
     }
 
-
-
-
-
-
-
+    @GetMapping("/product/{id}")
+    public CommonResponse<ProductResponseDTO> getProductIndividual(@PathVariable UUID id) {
+        return productService.getSpecificProduct(id);
+    }
 
 
 

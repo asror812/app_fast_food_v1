@@ -5,6 +5,7 @@ import com.example.app_fast_food.category.entity.Category;
 import com.example.app_fast_food.check.entity.Check;
 import com.example.app_fast_food.comment.Comment;
 import com.example.app_fast_food.filial.entity.Region;
+import com.example.app_fast_food.product.Product;
 import com.example.app_fast_food.role.Role;
 import com.example.app_fast_food.user.Permission;
 import jakarta.persistence.*;
@@ -74,6 +75,14 @@ public class User implements UserDetails {
                 .map(p -> new SimpleGrantedAuthority(p.name()))
                 .collect(Collectors.toSet());
     }
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorites",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    public Set<Product> favoriteProducts;
 
     @Override
     public String getUsername() {

@@ -1,7 +1,8 @@
 package com.example.app_fast_food.order.orderItem.dto;
 
-import com.example.app_fast_food.order.entity.Order;
-import com.example.app_fast_food.product.entity.Product;
+import com.example.app_fast_food.order.Order;
+import com.example.app_fast_food.product.Product;
+import com.example.app_fast_food.product.dto.ProductDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,16 +15,14 @@ import lombok.NoArgsConstructor;
 @Getter
 public class OrderItemDTO {
 
+    @NotBlank
+    @NotNull
+    private ProductDTO product;
+
     @NotNull
     @NotBlank
     private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
     private Order order;
 
 }

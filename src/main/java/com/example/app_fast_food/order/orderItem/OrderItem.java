@@ -1,8 +1,8 @@
 package com.example.app_fast_food.order.orderItem;
 
 
-import com.example.app_fast_food.order.entity.Order;
-import com.example.app_fast_food.product.entity.Product;
+import com.example.app_fast_food.order.Order;
+import com.example.app_fast_food.product.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotNull @NotBlank
     private Integer quantity;

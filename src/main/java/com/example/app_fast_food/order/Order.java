@@ -1,4 +1,4 @@
-package com.example.app_fast_food.order.entity;
+package com.example.app_fast_food.order;
 
 
 import com.example.app_fast_food.order.orderItem.OrderItem;
@@ -33,6 +33,10 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User userId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id" , nullable = false)
+    private User user;
 
 
     //@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)

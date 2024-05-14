@@ -2,10 +2,8 @@ package com.example.app_fast_food.product;
 
 import com.example.app_fast_food.common.mapper.GenericMapper;
 import com.example.app_fast_food.product.dto.ProductCreateDTO;
-import com.example.app_fast_food.product.dto.ProductDTO;
 import com.example.app_fast_food.product.dto.ProductResponseDTO;
 import com.example.app_fast_food.product.dto.ProductUpdateDTO;
-import com.example.app_fast_food.product.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

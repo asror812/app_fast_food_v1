@@ -1,7 +1,7 @@
 package com.example.app_fast_food.comment;
 
 
-import com.example.app_fast_food.product.entity.Product;
+import com.example.app_fast_food.product.Product;
 import com.example.app_fast_food.user.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity

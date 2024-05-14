@@ -1,7 +1,7 @@
 package com.example.app_fast_food.attachment.entity;
 
 
-import com.example.app_fast_food.product.entity.Product;
+import com.example.app_fast_food.product.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

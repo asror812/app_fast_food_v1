@@ -1,7 +1,7 @@
 package com.example.app_fast_food.category.entity;
 
 
-import com.example.app_fast_food.product.entity.Product;
+import com.example.app_fast_food.product.Product;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;

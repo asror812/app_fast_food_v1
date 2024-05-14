@@ -4,7 +4,6 @@ import com.example.app_fast_food.common.mapper.GenericMapper;
 import com.example.app_fast_food.order.dto.OrderCreateDTO;
 import com.example.app_fast_food.order.dto.OrderResponseDTO;
 import com.example.app_fast_food.order.dto.OrderUpdateDTO;
-import com.example.app_fast_food.order.entity.Order;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
