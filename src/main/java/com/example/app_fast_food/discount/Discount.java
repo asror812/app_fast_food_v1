@@ -18,8 +18,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Table(name = "discount")
-@SQLRestriction("isActive=false")
-@SQLDelete(sql = ("update discount set isActive=true where id=?"))
+@SQLRestriction("is_active=true")
+@SQLDelete(sql = ("update discount set is_active=true where id=?"))
 public class Discount {
 
     @Id
@@ -28,10 +28,10 @@ public class Discount {
 
     private String  name;
     private Integer percentage;
-    private LocalDateTime until;
+    private LocalDateTime endDate;
 
     @Column(name = "required_quantity")
-    private int requiredQuantity;
+    private Integer requiredQuantity;
 
     private boolean isActive ;
     @ManyToMany(mappedBy = "discounts")

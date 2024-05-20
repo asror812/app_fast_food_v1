@@ -18,6 +18,7 @@ import lombok.Setter;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @AllArgsConstructor
@@ -36,8 +37,9 @@ public class Product {
 
     private Double price;
 
-    @NotNull @NotBlank
-    private String categoryName;
+    @ManyToOne
+    @JoinColumn(name = "category_id" , nullable = false)
+    private Category category;
 
     private Integer weight;
 
@@ -52,19 +54,26 @@ public class Product {
     )
     private Set<Discount> discounts;
 
-    @OneToMany(mappedBy = "product")
+    @ManyToMany
+    @JoinTable(
+            name = "product_bonuses" ,
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "bonus_id")
+    )
     private Set<Bonus> bonuses;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id" , nullable = false)
-    private Category category;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Attachment main;
 
-    @OneToMany(mappedBy = "product")
-    private Set<Attachment> attachment;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Attachment other;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product" , cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    public Set<Discount> getActiveDiscounts(){
+        return discounts.stream()
+                .filter(Discount::isActive)
+                .collect(Collectors.toSet());
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.app_fast_food.user.otp;
 
 import com.example.app_fast_food.common.exceptions.OtpException;
+import com.example.app_fast_food.common.exceptions.RestException;
 import com.example.app_fast_food.common.notification.sms.SmsNotificationService;
 import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.user.otp.dto.ValidatePhoneNumberDTO;
@@ -45,6 +46,10 @@ public class OtpService {
            Otp otp = sendSmsInternal(phoneNumber) ;
            otpRepository.save(otp);
            return CommonResponse.succeed("Sms was sent successfully");
+        }
+
+        if(existingOtp.isEmpty()){
+            throw new RestException.EntityNotFoundException("Otp" , phoneNumber );
         }
         Otp otp = existingOtp.orElseThrow(() -> new EntityNotFoundException("We didnt send any verification"));
 

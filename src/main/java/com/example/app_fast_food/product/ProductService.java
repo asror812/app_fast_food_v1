@@ -1,44 +1,44 @@
 package com.example.app_fast_food.product;
 
-import com.example.app_fast_food.attachment.AttachmentRepository;
-import com.example.app_fast_food.attachment.entity.Attachment;
+import com.example.app_fast_food.attachment.AttachmentDTOMapper;
 import com.example.app_fast_food.bonus.BonusDTOMapper;
 import com.example.app_fast_food.bonus.BonusRepository;
-import com.example.app_fast_food.bonus.dto.BonusResponseDTO;
+import com.example.app_fast_food.category.CategoryDTOMapper;
+import com.example.app_fast_food.comment.CommentDTOMapper;
+import com.example.app_fast_food.common.exceptions.RestException;
 import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.common.service.GenericService;
 import com.example.app_fast_food.discount.DiscountMapper;
 import com.example.app_fast_food.discount.DiscountRepository;
-import com.example.app_fast_food.discount.dto.DiscountResponseDTO;
 import com.example.app_fast_food.product.dto.ProductCreateDTO;
 import com.example.app_fast_food.product.dto.ProductResponseDTO;
 import com.example.app_fast_food.product.dto.ProductUpdateDTO;
 import com.example.app_fast_food.user.UserRepository;
-import com.example.app_fast_food.user.entity.User;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
 @Getter
-public class ProductService extends GenericService<Product , UUID , ProductResponseDTO , ProductCreateDTO , ProductUpdateDTO > {
+public class ProductService extends GenericService<Product , UUID, ProductResponseDTO , ProductCreateDTO , ProductUpdateDTO > {
 
     private final ProductRepository repository;
     private final Class<Product> entityClass = Product.class;
     private final ProductDTOMapper mapper;
-    private final AttachmentRepository attachmentRepository;
     private final DiscountRepository discountRepository;
     private final DiscountMapper discountMapper;
     private final BonusDTOMapper bonusMapper;
     private final BonusRepository bonusRepository;
     private final UserRepository userRepository;
+    private final CategoryDTOMapper categoryMapper;
+    private final CommentDTOMapper commentDTOMapper;
+    private final AttachmentDTOMapper attachmentDTOMapper;
 
     @Override
     protected CommonResponse<ProductResponseDTO> internalCreate(ProductCreateDTO productCreateDTO) {
@@ -78,53 +78,68 @@ public class ProductService extends GenericService<Product , UUID , ProductRespo
     }
 
 
-    public List<ProductResponseDTO> getProductResponseDTOS(List<Product> popularProducts) {
+    public CommonResponse<ProductResponseDTO> getSpecificProduct(UUID id) {
+        Product product = repository.findProductById(id)
+                .orElseThrow(() ->
+                        new RestException.EntityNotFoundException("Product" , id.toString()));
+
+        ProductResponseDTO dto = mapper.toResponseDTO(product);
+
+        return CommonResponse.succeed(dto);
+    }
+
+
+
+    public List<ProductResponseDTO> getProductResponseDTOS(List<Product> products) {
+
         List<ProductResponseDTO> productResponseDTOS = new ArrayList<>();
+
+        for (Product popularProduct : products) {
+            productResponseDTOS.add(mapper.toResponseDTO(popularProduct));
+        }
+
+        return productResponseDTOS;
+    }
+
+}
+
+    /*  List<ProductResponseDTO> productResponseDTOS = new ArrayList<>();
 
         for (Product p : popularProducts) {
 
-            Attachment attachment = attachmentRepository
-                    .findByProduct_IdAndMainIsTrue(p.getId())
-                    .orElseThrow(
-                            () ->
-                            new EntityNotFoundException("Attachment of product " + p.getId() + " not found")) ;
-
             List<DiscountResponseDTO> discountResponseDTOS = discountRepository
-                    .findByProductId(p.getId()).stream()
+                    .findDiscountsByProductId(p.getId()).stream()
                     .map(discountMapper::toResponseDTO)
                     .toList();
 
-            Double resultPrice = p.getPrice();
+            Double finalPrice = p.getPrice();
 
             if (!discountResponseDTOS.isEmpty()) {
                 for (DiscountResponseDTO discountResponseDTO : discountResponseDTOS) {
-                    resultPrice -= discountResponseDTO.getPercentage() * p.getPrice();
+                    finalPrice -= discountResponseDTO.getPercentage() * p.getPrice();
                 }
             }
+
+            CategoryResponseDTO categoryResponseDTO = categoryMapper.toResponseDTO(p.getCategory());
 
             List<BonusResponseDTO> bonuses = p.getBonuses()
                     .stream().map(bonusMapper::toResponseDTO)
                     .toList();
 
+            List<CommentResponseDTO> comments = p.getComments()
+                    .stream().map(commentDTOMapper::toResponseDTO)
+                    .toList();
+
+            AttachmentResponseDTO main = attachmentDTOMapper.toResponseDTO(p.getMain());
+            AttachmentResponseDTO other = attachmentDTOMapper.toResponseDTO(p.getOther());
 
             ProductResponseDTO dto =
-                    new ProductResponseDTO(p.getId(), p.getSold(), p.getCategory(),
-                            attachment.getDownloadUrl(),
+                    new ProductResponseDTO(
+                            p.getId(), p.getName() , p.getPrice() ,
+                            categoryResponseDTO, p.getWeight() ,  p.getSold(),
+                            main, other, comments,
                             discountResponseDTOS.stream().toList(),
-                            bonuses , resultPrice);
+                            bonuses, finalPrice);
 
             productResponseDTOS.add(dto);
-        }
-        return productResponseDTOS;
-    }
-
-    public CommonResponse<ProductResponseDTO> getSpecificProduct(UUID id) {
-        Product product = repository.findProductById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
-
-        ProductResponseDTO dto = getProductResponseDTOS(List.of(product))
-                .get(0);
-
-        return CommonResponse.succeed(dto);
-    }
-}
+        }*/

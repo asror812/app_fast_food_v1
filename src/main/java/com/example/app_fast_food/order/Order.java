@@ -21,8 +21,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItem;
+    @OneToMany(mappedBy = "order" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    private List<OrderItem> orderItems;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
@@ -31,13 +31,7 @@ public class Order {
     private PaymentType paymentType;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User userId;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id" , nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-
-    //@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
 }

@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @OpenAPIDefinition(
@@ -17,7 +16,6 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
                 description = "Open API for FAST FOOT APPLICATION",
                 title = "Fast food application"
         )
-
 )
 
 @SecurityScheme(

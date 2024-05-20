@@ -1,7 +1,6 @@
 package com.example.app_fast_food.bonus.dto;
 
 import com.example.app_fast_food.bonus.BonusCondition;
-import com.example.app_fast_food.product.dto.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,10 +14,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class BonusDTO {
-
-    private ProductDTO bonusProduct;
-
-    private ProductDTO product;
 
     private BonusCondition conditionType;
 

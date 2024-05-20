@@ -25,6 +25,4 @@ public class OrderDTO {
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
 
-    private User userId;
-
 }

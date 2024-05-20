@@ -29,4 +29,18 @@ public class RestException extends RuntimeException{
             super(String.format(MESSAGE, fileName , path ));
         }
     }
+
+    public static class EntityNotFoundException extends RestException{
+        private static final String MESSAGE = "%s entity not found with id %s";
+        public EntityNotFoundException(String entityName , String id ){
+            super(String.format(MESSAGE, entityName , id ));
+        }
+    }
+
+
+    public static class InvalidOperationException extends RestException {
+        public InvalidOperationException(String s) {
+           super(s);
+        }
+    }
 }

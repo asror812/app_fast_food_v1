@@ -1,6 +1,8 @@
 package com.example.app_fast_food.product;
 
 import com.example.app_fast_food.common.mapper.GenericMapper;
+import com.example.app_fast_food.discount.Discount;
+import com.example.app_fast_food.discount.dto.DiscountResponseDTO;
 import com.example.app_fast_food.product.dto.ProductCreateDTO;
 import com.example.app_fast_food.product.dto.ProductResponseDTO;
 import com.example.app_fast_food.product.dto.ProductUpdateDTO;
@@ -20,10 +22,20 @@ public class ProductDTOMapper extends GenericMapper<Product, ProductCreateDTO , 
     }
 
 
-    //Todo
     @Override
     public ProductResponseDTO toResponseDTO(Product product) {
-        return mapper.map(product , ProductResponseDTO.class);
+        ProductResponseDTO responseDTO = mapper.map(product, ProductResponseDTO.class);
+
+        Double finalPrice = product.getPrice();
+
+        if (!product.getDiscounts().isEmpty()) {
+            for (Discount discount : product.getActiveDiscounts()) {
+                finalPrice -= discount.getPercentage() * product.getPrice();
+            }
+        }
+
+        responseDTO.setFinalPrice(finalPrice);
+        return responseDTO;
     }
 
     @Override

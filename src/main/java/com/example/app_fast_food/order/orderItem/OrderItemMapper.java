@@ -1,7 +1,7 @@
 package com.example.app_fast_food.order.orderItem;
 
 import com.example.app_fast_food.common.mapper.GenericMapper;
-import com.example.app_fast_food.order.dto.OrderItemCreateDTO;
+import com.example.app_fast_food.order.orderItem.dto.OrderItemCreateDTO;
 import com.example.app_fast_food.order.orderItem.dto.OrderItemResponseDTO;
 import com.example.app_fast_food.order.orderItem.dto.OrderItemUpdateDTO;
 import lombok.RequiredArgsConstructor;

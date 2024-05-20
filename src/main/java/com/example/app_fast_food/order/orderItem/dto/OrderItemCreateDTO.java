@@ -1,18 +1,20 @@
-package com.example.app_fast_food.category.dto;
+package com.example.app_fast_food.order.orderItem.dto;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CategoryDTO {
+public class OrderItemCreateDTO {
 
-    private String name;
 
-    private String subCategory;
+    private UUID productId;
+
 
 }

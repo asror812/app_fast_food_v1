@@ -3,7 +3,11 @@ package com.example.app_fast_food.filial.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.UUID;
@@ -20,10 +24,10 @@ public class Filial {
     private UUID id;
 
     @NotBlank
-    @NonNull
+    @NotNull
     private String name;
 
-    @NonNull
+    @NotNull
     @NotBlank
     private String destination;
 
@@ -33,14 +37,14 @@ public class Filial {
     @Column(name = "close_at")
     private Date closeAt;
 
-    @NonNull
+    @NotNull
     @NotBlank
     private Double longitude;
 
     @Enumerated(EnumType.STRING)
     private Region region;
 
-    @NonNull
+    @NotNull
     @NotBlank
     private Double latitude;
 

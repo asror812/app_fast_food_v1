@@ -5,8 +5,6 @@ import com.example.app_fast_food.common.exceptions.OtpException;
 
 import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.common.service.GenericService;
-import com.example.app_fast_food.role.Role;
-import com.example.app_fast_food.role.RoleRepository;
 import com.example.app_fast_food.security.JwtService;
 
 import com.example.app_fast_food.user.dto.UserCreateDTO;
@@ -14,9 +12,7 @@ import com.example.app_fast_food.user.dto.UserResponseDTO;
 import com.example.app_fast_food.user.dto.UserUpdateDTO;
 import com.example.app_fast_food.user.entity.User;
 import com.example.app_fast_food.user.otp.OtpRepository;
-import com.example.app_fast_food.user.otp.OtpService;
 import com.example.app_fast_food.user.otp.entity.Otp;
-import io.jsonwebtoken.security.Password;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

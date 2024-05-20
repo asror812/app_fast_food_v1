@@ -5,6 +5,7 @@ import com.example.app_fast_food.user.entity.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,6 +13,12 @@ import java.util.UUID;
 public interface OrderRepository extends GenericRepository<Order , Long> {
 
 
-    @Query("SELECT o FROM Order o WHERE o.userId =: userId AND o.orderStatus = 'BASKET'")
+    @Query("SELECT o FROM Order o WHERE o.user.id =: userId AND o.orderStatus = 'BASKET'")
     Optional<Order> findBasketByUserId(UUID userId);
+
+    List<Order> findByOrderStatus(OrderStatus orderStatus);
+
+    Optional<Order> findOrderById(Long orderId);
+
+    void deleteOrderByUserIdAndOrderStatus(UUID userId, OrderStatus orderStatus);
 }

@@ -25,7 +25,7 @@ public class AttachmentService {
 
     private final AttachmentRepository repository;
     final String IMAGES_FOLDER_PATH = "D:\\Java projects\\fast_food" ;
-    final Long limitSize = 1l;
+    final Long limitSize = 1L;
 
     private final ModelMapper mapper;
 
@@ -40,7 +40,6 @@ public class AttachmentService {
         String contentType = file.getContentType();
         UUID id = UUID.randomUUID();
         String downloadUrl = "http://localhost/attachment/download/" + id;
-        boolean isMain = Boolean.parseBoolean(request.getParameter("isMain"));
 
 
         if(file.getSize()> 1024 * 1024 ){
@@ -48,7 +47,7 @@ public class AttachmentService {
         }
 
         Attachment attachment = new Attachment(id , originalName , downloadUrl ,
-                contentType , size ,  null , isMain);
+                contentType , size ,  null );
         repository.save(attachment);
 
         InputStream inputStream = file.getInputStream();

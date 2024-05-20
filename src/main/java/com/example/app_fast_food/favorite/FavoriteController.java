@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("favorite")
+@RequestMapping("/favorite")
 @RequiredArgsConstructor
 public class FavoriteController {
 
@@ -26,8 +26,9 @@ public class FavoriteController {
     }
 
 
-    @PostMapping("{product_id}")
+    @PostMapping("/{product_id}")
     public CommonResponse<String> addFavorite(@AuthenticationPrincipal User user, @PathVariable UUID product_id){
         return favoriteService.addFavorite(user.getId() , product_id);
     }
+
  }

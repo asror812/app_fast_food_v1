@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -21,10 +22,8 @@ public class Bonus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
+    @ManyToMany(mappedBy = "bonuses")
+    private Set<Product> bonusProduct;
 
     @Enumerated(EnumType.STRING)
     private BonusCondition conditionType;
@@ -35,10 +34,5 @@ public class Bonus {
     private LocalDate endDate;
 
     private boolean isActive;
-
-    //private String couponCode;
-    // private boolean isLimited;
-    //private int quantityAvailable;
-
 
 }

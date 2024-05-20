@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/category")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -24,9 +24,7 @@ public class CategoryController {
        @PostMapping
        public CommonResponse<CategoryResponseDTO> create(@RequestBody CategoryCreateDTO createDTO){
 
-           CommonResponse<CategoryResponseDTO> categoryResponseDTO = categoryService.create(createDTO);
-
-           return categoryResponseDTO;
+           return categoryService.create(createDTO);
        }
 
        @GetMapping

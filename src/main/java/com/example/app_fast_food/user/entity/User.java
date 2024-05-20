@@ -1,16 +1,17 @@
 package com.example.app_fast_food.user.entity;
 
 
-import com.example.app_fast_food.category.entity.Category;
 import com.example.app_fast_food.check.entity.Check;
 import com.example.app_fast_food.comment.Comment;
 import com.example.app_fast_food.filial.entity.Region;
+import com.example.app_fast_food.order.Order;
 import com.example.app_fast_food.product.Product;
-import com.example.app_fast_food.role.Role;
-import com.example.app_fast_food.user.Permission;
+import com.example.app_fast_food.user.permission.Permission;
+import com.example.app_fast_food.user.role.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @AllArgsConstructor
@@ -33,7 +35,8 @@ public class User implements UserDetails {
     private UUID id;
 
     @Column(unique = true , name = "phone_number")
-    @NotNull @NotBlank
+    @NotNull
+    @Pattern(regexp = "^\\+[0-9]{2} [0-9]{3}-[0-9]{2}-[0-9]{2}$")
     private String phoneNumber;
 
     @NotNull @NotBlank
@@ -43,10 +46,6 @@ public class User implements UserDetails {
     private String password;
 
     private Region region;
-
-    @ManyToOne
-    @JoinColumn(name = "catory_id")
-    private Category category;
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comment;
@@ -63,18 +62,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Check> check;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<Permission> permissions = new ArrayList<>();
-        for (Role role : roles) {
-            permissions.addAll(role.getPermissions());
-        }
-
-        return permissions
-                .stream()
-                .map(p -> new SimpleGrantedAuthority(p.name()))
-                .collect(Collectors.toSet());
-    }
 
     @ManyToMany
     @JoinTable(
@@ -83,6 +70,20 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     public Set<Product> favoriteProducts;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Stream<Permission> role_permissions = roles
+                .stream().map(Role::getPermissions)
+                .flatMap(Collection::stream);
+
+
+        return role_permissions
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
+                .collect(Collectors.toSet());
+    }
+
+
 
     @Override
     public String getUsername() {

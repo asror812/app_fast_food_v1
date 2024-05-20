@@ -19,7 +19,7 @@ public class CommonResponse<T> {
     private boolean success;
     private T data;
     private String errorMessage;
-    private List<FieldErrorDTO> fieldErrorDTOList;
+    private List<FieldErrorDTO> fieldErrors;
 
 
     public static<T> CommonResponse<T> succeed(T data) {
@@ -44,7 +44,7 @@ public class CommonResponse<T> {
 
         CommonResponse<T> commonResponse = new CommonResponse<>();
         commonResponse.success = false;
-        commonResponse.fieldErrorDTOList = fieldErrorDTOList;
+        commonResponse.fieldErrors = fieldErrorDTOList;
 
         return commonResponse;
     }

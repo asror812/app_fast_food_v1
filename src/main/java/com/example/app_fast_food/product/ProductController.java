@@ -16,18 +16,6 @@ import java.util.UUID;
 public class ProductController {
     private final ProductService productService;
 
-
-    @PostMapping("/product")
-    public CommonResponse<ProductResponseDTO> addProduct(@RequestBody ProductCreateDTO createDTO) {
-        return productService.create(createDTO);
-    }
-
- /*   @GetMapping("/product/{id}")
-    public CommonResponse<ProductResponseDTO> getById(@PathVariable UUID id) {
-        return productService.getById(id);
-    }
- */
-
     @GetMapping("/products")
     public CommonResponse<List<ProductResponseDTO>> getAll() {
         return productService.getAll();
