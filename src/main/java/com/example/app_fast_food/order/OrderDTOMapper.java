@@ -31,7 +31,6 @@ public class OrderDTOMapper extends GenericMapper<Order , OrderCreateDTO, OrderR
 
         double orderPrice = 0.;
         double discount = 0.;
-
         for (OrderItem item : order.getOrderItems()) {
             Product product = item.getProduct();
             Discount mostPreferableDiscount = null;
@@ -47,19 +46,19 @@ public class OrderDTOMapper extends GenericMapper<Order , OrderCreateDTO, OrderR
 
             //Discount without requirements
             for (Discount activeDiscounts : activeDiscountWithNoRequirements) {
+
                 discount += (product.getPrice() * activeDiscounts.getPercentage() / 100) *
-                        (item.getQuantity() / activeDiscounts.getRequiredQuantity());
+                        activeDiscounts.getRequiredQuantity();
             }
 
             //Discount with requirements : Find the most preferable discount
+            //Where the discount required quantity is the closest one to item quantity
             for (Discount activeDiscount : activeDiscountsWithRequirements) {
 
-                if (mostPreferableDiscount == null) {
+                if (item.getQuantity() >= activeDiscount.getRequiredQuantity() &&
+                    (mostPreferableDiscount == null || activeDiscount.getRequiredQuantity() > mostPreferableDiscount.getPercentage()))
+                {
                     mostPreferableDiscount = activeDiscount;
-                } else {
-                    if (mostPreferableDiscount.getRequiredQuantity() < activeDiscount.getRequiredQuantity()) {
-                        mostPreferableDiscount = activeDiscount;
-                    }
                 }
             }
 

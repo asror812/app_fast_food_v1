@@ -1,6 +1,7 @@
 package com.example.app_fast_food.order;
 
 
+import com.example.app_fast_food.bonus.dto.BonusDTO;
 import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.order.dto.OrderResponseDTO;
 import com.example.app_fast_food.order.orderItem.dto.OrderItemRequestDTO;
@@ -68,6 +69,9 @@ public class OrderController {
     public CommonResponse<OrderResponseDTO> decrementQuantity(@AuthenticationPrincipal User user, @RequestBody OrderItemRequestDTO dto) {
         return orderService.decrement(user.getId() , dto);
     }
+
+    @PostMapping("/make-order")
+    public CommonResponse<BonusDTO>
 
 
 
