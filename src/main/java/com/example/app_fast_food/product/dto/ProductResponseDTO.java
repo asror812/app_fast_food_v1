@@ -52,5 +52,5 @@ public class ProductResponseDTO {
     private List<DiscountResponseDTO> discounts;
     private List<BonusResponseDTO> bonuses;
 
-    private Double finalPrice;
+    private Long finalPrice;
 }

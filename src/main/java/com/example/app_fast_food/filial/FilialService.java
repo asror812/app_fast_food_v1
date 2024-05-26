@@ -8,11 +8,13 @@ import com.example.app_fast_food.filial.dto.FilialCreateDTO;
 import com.example.app_fast_food.filial.dto.FilialResponseDTO;
 import com.example.app_fast_food.filial.dto.FilialUpdateDTO;
 import com.example.app_fast_food.filial.entity.Filial;
+import com.example.app_fast_food.user.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -38,6 +40,13 @@ public class FilialService extends GenericService<Filial , UUID , FilialResponse
 
     @Override
     protected CommonResponse<FilialResponseDTO> internalUpdate(UUID uuid, FilialUpdateDTO filialUpdateDTO) {
+        return null;
+    }
+
+    public Filial findTheNearestOne(User user) {
+
+        List<Filial> all = repository.findAll();
+
         return null;
     }
 }

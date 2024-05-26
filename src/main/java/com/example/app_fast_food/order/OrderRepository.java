@@ -18,7 +18,7 @@ public interface OrderRepository extends GenericRepository<Order , Long> {
 
     List<Order> findByOrderStatus(OrderStatus orderStatus);
 
-    Optional<Order> findOrderById(Long orderId);
+    Optional<Order> findOrderById(UUID orderId);
 
     void deleteOrderByUserIdAndOrderStatus(UUID userId, OrderStatus orderStatus);
 }

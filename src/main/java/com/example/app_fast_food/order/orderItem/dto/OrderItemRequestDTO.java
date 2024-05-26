@@ -5,10 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class OrderItemRequestDTO {
-    private Long orderId;
-    private Long orderItemId;
+    private UUID orderId;
+    private UUID orderItemId;
+    private Integer newQuantity;
 }

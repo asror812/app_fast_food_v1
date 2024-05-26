@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -71,6 +72,8 @@ public class User implements UserDetails {
     )
     public Set<Product> favoriteProducts;
 
+    private Address address;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Stream<Permission> role_permissions = roles
@@ -82,8 +85,6 @@ public class User implements UserDetails {
                 .map(permission -> new SimpleGrantedAuthority(permission.getName()))
                 .collect(Collectors.toSet());
     }
-
-
 
     @Override
     public String getUsername() {

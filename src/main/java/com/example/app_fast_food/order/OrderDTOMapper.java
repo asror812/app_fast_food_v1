@@ -29,55 +29,12 @@ public class OrderDTOMapper extends GenericMapper<Order , OrderCreateDTO, OrderR
     public OrderResponseDTO toResponseDTO(Order order) {
         OrderResponseDTO responseDTO = mapper.map(order, OrderResponseDTO.class);
 
-        double orderPrice = 0.;
-        double discount = 0.;
-        for (OrderItem item : order.getOrderItems()) {
-            Product product = item.getProduct();
-            Discount mostPreferableDiscount = null;
-
-            Set<Discount> activeDiscountsWithRequirements = product.getActiveDiscounts().stream()
-                    .filter(p -> p.getRequiredQuantity() > 1)
-                    .collect(Collectors.toSet());
-
-            Set<Discount> activeDiscountWithNoRequirements = product
-                    .getActiveDiscounts()
-                    .stream().filter(p -> p.getRequiredQuantity() <= 1)
-                    .collect(Collectors.toSet());
-
-            //Discount without requirements
-            for (Discount activeDiscounts : activeDiscountWithNoRequirements) {
-
-                discount += (product.getPrice() * activeDiscounts.getPercentage() / 100) *
-                        activeDiscounts.getRequiredQuantity();
-            }
-
-            //Discount with requirements : Find the most preferable discount
-            //Where the discount required quantity is the closest one to item quantity
-            for (Discount activeDiscount : activeDiscountsWithRequirements) {
-
-                if (item.getQuantity() >= activeDiscount.getRequiredQuantity() &&
-                    (mostPreferableDiscount == null || activeDiscount.getRequiredQuantity() > mostPreferableDiscount.getPercentage()))
-                {
-                    mostPreferableDiscount = activeDiscount;
-                }
-            }
-
-            //Check if there is discount with requirements available
-            if (mostPreferableDiscount != null) {
-                int productDiscount = item.getQuantity() / mostPreferableDiscount.getRequiredQuantity();
-
-                discount += (productDiscount * product.getPrice() / 100) * item.getQuantity();
-            }
-
-            orderPrice += product.getPrice() * item.getQuantity();
-        }
-
-        responseDTO.setShippingCost(9000.);
-        responseDTO.setOrderPrice(orderPrice - discount);
-        responseDTO.setTotalPrice(orderPrice - discount + responseDTO.getShippingCost());
 
         return responseDTO;
     }
+
+
+
 
     @Override
     public void toEntity(OrderUpdateDTO orderUpdateDTO, Order order) {

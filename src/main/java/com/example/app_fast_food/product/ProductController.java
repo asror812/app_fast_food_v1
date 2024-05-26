@@ -1,11 +1,8 @@
 package com.example.app_fast_food.product;
 
 import com.example.app_fast_food.common.response.CommonResponse;
-import com.example.app_fast_food.product.dto.ProductCreateDTO;
 import com.example.app_fast_food.product.dto.ProductResponseDTO;
-import com.example.app_fast_food.user.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +37,5 @@ public class ProductController {
     public CommonResponse<ProductResponseDTO> getProductIndividual(@PathVariable UUID id) {
         return productService.getSpecificProduct(id);
     }
-
-
 
 }

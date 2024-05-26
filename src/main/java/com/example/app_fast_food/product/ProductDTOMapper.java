@@ -26,13 +26,11 @@ public class ProductDTOMapper extends GenericMapper<Product, ProductCreateDTO , 
     public ProductResponseDTO toResponseDTO(Product product) {
         ProductResponseDTO responseDTO = mapper.map(product, ProductResponseDTO.class);
 
-        Double finalPrice = product.getPrice();
+        Long finalPrice = product.getPrice();
 
-        if (!product.getDiscounts().isEmpty()) {
             for (Discount discount : product.getActiveDiscounts()) {
                 finalPrice -= discount.getPercentage() * product.getPrice();
             }
-        }
 
         responseDTO.setFinalPrice(finalPrice);
         return responseDTO;

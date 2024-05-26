@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -35,7 +36,7 @@ public class Product {
     @NotNull @NotBlank
     private String name;
 
-    private Double price;
+    private Long price;
 
     @ManyToOne
     @JoinColumn(name = "category_id" , nullable = false)

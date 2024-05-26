@@ -9,6 +9,7 @@ import com.example.app_fast_food.discount.DiscountRepository;
 import com.example.app_fast_food.filial.entity.Region;
 import com.example.app_fast_food.product.Product;
 import com.example.app_fast_food.product.ProductRepository;
+import com.example.app_fast_food.user.entity.Address;
 import com.example.app_fast_food.user.permission.Permission;
 import com.example.app_fast_food.user.permission.PermissionRepository;
 import com.example.app_fast_food.user.role.Role;
@@ -20,6 +21,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -119,7 +121,7 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
 
             //Create lavash mini
             Product lavashMini = new Product(null , "Lavash Mini",
-                    5.99, lavashCategory, 250, 0L,
+                    20_000L, lavashCategory, 250, 0L,
                     Set.of(navruz, extra, extra2) , Collections.emptySet(),
                     lavashMiniAttachment, lavashMiniAttachment1, Collections.emptyList()
             );
@@ -127,14 +129,14 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
 
             //Create hamburger
             Product hamburger = new Product(null ,"Hamburger",
-                    7.99, hamburgerCategory, 300, 0L,
+                    25_000L, hamburgerCategory, 300, 0L,
                     Set.of(extra, extra2), Collections.emptySet(),
                     hamburgerAttachment, hamburgerAttachment1, Collections.emptyList()
             );
 
             //Create a Doner
             Product doner = new Product(null ,"Coca Cola",
-                    1.99, drinkCategory, 500, 0L,
+                    30_000L, drinkCategory, 500, 0L,
                     Set.of(navruz, extra), Collections.emptySet(),
                     donerAttachment, donerAttachment1, Collections.emptyList()
             );
@@ -142,7 +144,7 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
 
             // Create a Dessert
             Product pizza = new Product(null , "Pizza",
-                    2.99 , dessertCategory ,  150, 0L ,
+                    65_000L , dessertCategory ,  150, 0L ,
                     Set.of(extra2), Collections.emptySet(),
                     pizzaAttachment, pizzaAttachment1, Collections.emptyList()
             );
@@ -183,9 +185,12 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
         Role role = roleRepository.findByName("Admin")
                 .orElseThrow(() -> new RuntimeException("No admin role found"));
 
+        Address address = new Address( BigDecimal.valueOf(69.24007340) , BigDecimal.valueOf(41.29949580)   );
         User admin = new User(
                 null, "+97 675-00-00", "asror", passwordEncoder.encode("123"),
-                Region.ANDIJON, new ArrayList<>(), Set.of(role), new ArrayList<>(), new HashSet<>());
+                Region.ANDIJON, new ArrayList<>(), Set.of(role), new ArrayList<>(), new HashSet<>()
+                ,address
+                );
 
         if (!userRepository.existsByPhoneNumber(admin.getPhoneNumber())) {
             userRepository.save(admin);

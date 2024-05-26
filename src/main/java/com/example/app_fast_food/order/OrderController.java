@@ -1,23 +1,30 @@
 package com.example.app_fast_food.order;
 
 
-import com.example.app_fast_food.bonus.dto.BonusDTO;
+import com.example.app_fast_food.bonus.BonusService;
+import com.example.app_fast_food.bonus.dto.BonusRequestDTO;
+import com.example.app_fast_food.bonus.dto.BonusResponseDTO;
 import com.example.app_fast_food.common.response.CommonResponse;
+import com.example.app_fast_food.order.dto.OrderPurchaseDTO;
+import com.example.app_fast_food.order.dto.OrderRequestDTO;
 import com.example.app_fast_food.order.dto.OrderResponseDTO;
 import com.example.app_fast_food.order.orderItem.dto.OrderItemRequestDTO;
 import com.example.app_fast_food.order.orderItem.dto.OrderItemCreateDTO;
 import com.example.app_fast_food.order.orderItem.dto.OrderItemResponseDTO;
+import com.example.app_fast_food.product.dto.ProductResponseDTO;
 import com.example.app_fast_food.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/order")
 public class OrderController {
     private final OrderService orderService;
+    private final BonusService bonusService;
 
     @PostMapping("/add-to-existing-basket")
     public CommonResponse<List<OrderItemResponseDTO>> addProductToBasket(@AuthenticationPrincipal User user , @RequestBody OrderItemCreateDTO dto) {
@@ -57,21 +64,29 @@ public class OrderController {
 
     @PostMapping("/remove")
     public CommonResponse<String> removeProductFromBasket(@AuthenticationPrincipal User user, @RequestBody OrderItemRequestDTO dto) {
-        return orderService.removeProduct(user.getId() , dto);
+        return orderService.removeProduct(dto);
     }
 
-    @PostMapping("/increment")
-    public CommonResponse<OrderResponseDTO> incrementQuantity(@AuthenticationPrincipal User user, @RequestBody OrderItemRequestDTO dto) {
-        return orderService.increment(user.getId() , dto );
+    @PostMapping("/update-quantity")
+    public CommonResponse<OrderResponseDTO> updateOrderItemQuantity(@RequestBody OrderItemRequestDTO dto) {
+        return orderService.updateQuantity(dto.getOrderId() , dto.getOrderItemId() , dto.getNewQuantity() );
     }
 
-    @PostMapping("/decrement")
-    public CommonResponse<OrderResponseDTO> decrementQuantity(@AuthenticationPrincipal User user, @RequestBody OrderItemRequestDTO dto) {
-        return orderService.decrement(user.getId() , dto);
-    }
 
     @PostMapping("/make-order")
-    public CommonResponse<BonusDTO>
+    public CommonResponse<Set<BonusResponseDTO>> getAvailableBonus(@AuthenticationPrincipal User user , @RequestBody OrderRequestDTO dto) {
+         return bonusService.getOrderBonuses(user.getId() , dto.getOrderId());
+    }
+
+    @PostMapping("/confirm-bonus")
+    public CommonResponse<ProductResponseDTO> confirmBonus(@RequestBody BonusRequestDTO dto) {
+        return orderService.confirmBonus(dto.getProductId());
+    }
+
+    @PostMapping("confirm-order")
+    public CommonResponse<String> confirmOrder(@AuthenticationPrincipal User user , @RequestBody OrderRequestDTO dto) {
+        return orderService.confirmOrder(dto.getOrderId() , user.getId());
+    }
 
 
 

@@ -5,6 +5,7 @@ import com.example.app_fast_food.filial.entity.Filial;
 import com.example.app_fast_food.user.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.UUID;
@@ -28,15 +29,8 @@ public class Check {
       @JoinColumn(name = "filial_id" )
       private Filial filial;
 
-      @NonNull @NotBlank
-      private Double totalPrice;
+      @NotNull @NotBlank
+      private Long totalPrice;
 
       private String courier;
-
-      @NonNull @NotBlank
-      private Double latitude;
-
-      @NonNull @NotBlank
-      private Double longitude;
-
 }

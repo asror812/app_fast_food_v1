@@ -8,8 +8,8 @@ import com.example.app_fast_food.order.orderItem.dto.OrderItemUpdateDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
 
 @Service
 @Getter
@@ -34,4 +34,6 @@ public class OrderItemService extends GenericService<OrderItem , Long , OrderIte
         return orderItems.stream().map(mapper::toResponseDTO)
                 .toList();
     }
+
+
 }
