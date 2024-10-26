@@ -24,16 +24,9 @@ public class ProductDTOMapper extends GenericMapper<Product, ProductCreateDTO , 
 
     @Override
     public ProductResponseDTO toResponseDTO(Product product) {
-        ProductResponseDTO responseDTO = mapper.map(product, ProductResponseDTO.class);
 
-        Long finalPrice = product.getPrice();
 
-            for (Discount discount : product.getActiveDiscounts()) {
-                finalPrice -= discount.getPercentage() * product.getPrice();
-            }
-
-        responseDTO.setFinalPrice(finalPrice);
-        return responseDTO;
+        return mapper.map(product, ProductResponseDTO.class);
     }
 
     @Override

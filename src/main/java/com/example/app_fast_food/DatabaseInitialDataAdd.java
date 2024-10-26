@@ -6,6 +6,8 @@ import com.example.app_fast_food.category.entity.Category;
 import com.example.app_fast_food.common.exceptions.RestException;
 import com.example.app_fast_food.discount.Discount;
 import com.example.app_fast_food.discount.DiscountRepository;
+import com.example.app_fast_food.filial.FilialRepository;
+import com.example.app_fast_food.filial.entity.Filial;
 import com.example.app_fast_food.filial.entity.Region;
 import com.example.app_fast_food.product.Product;
 import com.example.app_fast_food.product.ProductRepository;
@@ -22,7 +24,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 
@@ -38,6 +42,7 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final DiscountRepository discountRepository;
     private final CategoryRepository categoryRepository;
+    private final FilialRepository filialRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -47,7 +52,41 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
         createAdmin();
         createDiscount();
         createProduct();
+        createFilial();
 
+        //todo
+        //create 5 checks
+
+        //create internalization
+        //create real attachments
+        //
+
+
+    }
+
+    private void createFilial() {
+
+        if(categoryRepository.findAll().isEmpty()){
+            Filial filial1 = new Filial(null , "Babur park filial" , "babur park" ,
+                    LocalTime.of(9  , 0) , LocalTime.of(0, 0 ),
+                    72.3422 , 40.7828 , Region.ANDIJON);
+
+            Filial filial2 = new Filial(null , "Registan Square filial" , "registan square" ,
+                    LocalTime.of(9  , 0) , LocalTime.of(0, 0 ),
+                    66.9749 , 39.6542 , Region.SAMARQAND);
+
+            Filial filial3 = new Filial(null , "Chorsu Bazaar filial" , "chorsu bazaar" ,
+                    LocalTime.of(9 , 0) , LocalTime.of(0 , 0) ,
+                    69.2435, 41.3270 , Region.TASHKENT);
+
+            Filial filial4 = new Filial(null , "Tashkent Tower filial" , "tashkent tower" ,
+                    LocalTime.of(9 , 0) , LocalTime.of(0 , 0) ,
+                    9.3341 , 41.3385 , Region.TASHKENT);
+
+            List<Filial> filials = Arrays.asList(filial1 , filial2 , filial3  ,filial4);
+
+            filialRepository.saveAll(filials);
+        }
     }
 
 
@@ -122,7 +161,7 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
             //Create lavash mini
             Product lavashMini = new Product(null , "Lavash Mini",
                     20_000L, lavashCategory, 250, 0L,
-                    Set.of(navruz, extra, extra2) , Collections.emptySet(),
+                    Set.of(navruz, extra, extra2) , null ,
                     lavashMiniAttachment, lavashMiniAttachment1, Collections.emptyList()
             );
 
@@ -130,14 +169,14 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
             //Create hamburger
             Product hamburger = new Product(null ,"Hamburger",
                     25_000L, hamburgerCategory, 300, 0L,
-                    Set.of(extra, extra2), Collections.emptySet(),
+                    Set.of(extra, extra2), null,
                     hamburgerAttachment, hamburgerAttachment1, Collections.emptyList()
             );
 
             //Create a Doner
             Product doner = new Product(null ,"Coca Cola",
                     30_000L, drinkCategory, 500, 0L,
-                    Set.of(navruz, extra), Collections.emptySet(),
+                    Set.of(navruz, extra), null,
                     donerAttachment, donerAttachment1, Collections.emptyList()
             );
 
@@ -145,7 +184,7 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
             // Create a Dessert
             Product pizza = new Product(null , "Pizza",
                     65_000L , dessertCategory ,  150, 0L ,
-                    Set.of(extra2), Collections.emptySet(),
+                    Set.of(extra2), null,
                     pizzaAttachment, pizzaAttachment1, Collections.emptyList()
             );
 
@@ -161,15 +200,17 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
 
         if (discountRepository.findAll().isEmpty()) {
             Discount discount = new Discount
-                    (null, "Navruz", 10, LocalDateTime.now().plusDays(10),
+                    (null, "Navruz", 10, LocalDate.now() ,
+                            LocalDate.now().plusDays(10),
                             0, true, null);
 
-            Discount discount1 = new Discount(null, "Extra", 15,
-                    LocalDateTime.now().plusDays(10), 3, true, null);
+            Discount discount1 = new Discount(null, "Extra", 15,LocalDate.now() ,
+                    LocalDate.now().plusDays(10), 3, true, null);
 
             discountRepository.save(discount1);
 
-            Discount discount2 = new Discount(null, "Extra-2", 5, LocalDateTime.now().plusDays(5),
+            Discount discount2 = new Discount(null, "Extra-2", 5, LocalDate.now() ,
+                    LocalDate.now().plusDays(5),
                     2, true, null);
 
             List<Discount> discounts = Arrays.asList(discount1 , discount2 , discount);
@@ -185,7 +226,8 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
         Role role = roleRepository.findByName("Admin")
                 .orElseThrow(() -> new RuntimeException("No admin role found"));
 
-        Address address = new Address( BigDecimal.valueOf(69.24007340) , BigDecimal.valueOf(41.29949580)   );
+        Address address = new Address( null , BigDecimal.valueOf(69.24007340) , BigDecimal.valueOf(41.29949580)   );
+
         User admin = new User(
                 null, "+97 675-00-00", "asror", passwordEncoder.encode("123"),
                 Region.ANDIJON, new ArrayList<>(), Set.of(role), new ArrayList<>(), new HashSet<>()

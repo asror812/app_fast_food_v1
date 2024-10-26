@@ -16,9 +16,8 @@ import java.util.List;
 public class OrderResponseDTO  extends OrderDTO {
 
     private List<OrderItemResponseDTO> orderItems;
-
-    private Double shippingCost ;
-    private Double orderPrice;
-    private Double totalPrice;
+    private Long shippingCost ;
+    private Long orderPrice;
+    private Long totalPrice;
 
 }

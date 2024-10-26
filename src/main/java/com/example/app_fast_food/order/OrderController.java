@@ -3,21 +3,22 @@ package com.example.app_fast_food.order;
 
 import com.example.app_fast_food.bonus.BonusService;
 import com.example.app_fast_food.bonus.dto.BonusRequestDTO;
-import com.example.app_fast_food.bonus.dto.BonusResponseDTO;
+import com.example.app_fast_food.check.dto.CheckCreateDTO;
 import com.example.app_fast_food.common.response.CommonResponse;
-import com.example.app_fast_food.order.dto.OrderPurchaseDTO;
 import com.example.app_fast_food.order.dto.OrderRequestDTO;
 import com.example.app_fast_food.order.dto.OrderResponseDTO;
-import com.example.app_fast_food.order.orderItem.dto.OrderItemRequestDTO;
 import com.example.app_fast_food.order.orderItem.dto.OrderItemCreateDTO;
+import com.example.app_fast_food.order.orderItem.dto.OrderItemRequestDTO;
 import com.example.app_fast_food.order.orderItem.dto.OrderItemResponseDTO;
 import com.example.app_fast_food.product.dto.ProductResponseDTO;
 import com.example.app_fast_food.user.entity.User;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,38 +55,37 @@ public class OrderController {
 
     @GetMapping("/basket")
     public CommonResponse<OrderResponseDTO> getBasket(@AuthenticationPrincipal User user) {
-        return orderService.getBasketOrderItems(user.getId());
+        return orderService.getBasket(user);
     }
 
     @PostMapping("/delete/basket")
     public CommonResponse<String> deleteBasket(@AuthenticationPrincipal User user) {
-        return orderService.deleteBasketByUserId(user.getId());
+        return orderService.deleteUserBasket(user.getId());
     }
 
-    @PostMapping("/remove")
-    public CommonResponse<String> removeProductFromBasket(@AuthenticationPrincipal User user, @RequestBody OrderItemRequestDTO dto) {
-        return orderService.removeProduct(dto);
+    @PostMapping("/remove-all")
+    public CommonResponse<String> removeProductsFromBasket(@AuthenticationPrincipal User user , @RequestBody UUID orderId) {
+        return orderService.removeProducts(user , orderId);
     }
 
-    @PostMapping("/update-quantity")
+    @PostMapping("/remove-product")
+    public CommonResponse<String> removeProductFromBasket(@AuthenticationPrincipal User user , @RequestBody OrderItemRequestDTO dto) {
+        return orderService.removeProduct(user , dto);
+    }
+
+   /* @PostMapping("/update-quantity")
     public CommonResponse<OrderResponseDTO> updateOrderItemQuantity(@RequestBody OrderItemRequestDTO dto) {
         return orderService.updateQuantity(dto.getOrderId() , dto.getOrderItemId() , dto.getNewQuantity() );
+    }*/
+
+    @PostMapping("/select-bonus")
+    public CommonResponse<ProductResponseDTO> chooseBonus(UUID productId , UUID orderId) {
+        return orderService.selectBonus(orderId , productId);
     }
 
-
-    @PostMapping("/make-order")
-    public CommonResponse<Set<BonusResponseDTO>> getAvailableBonus(@AuthenticationPrincipal User user , @RequestBody OrderRequestDTO dto) {
-         return bonusService.getOrderBonuses(user.getId() , dto.getOrderId());
-    }
-
-    @PostMapping("/confirm-bonus")
-    public CommonResponse<ProductResponseDTO> confirmBonus(@RequestBody BonusRequestDTO dto) {
-        return orderService.confirmBonus(dto.getProductId());
-    }
-
-    @PostMapping("confirm-order")
-    public CommonResponse<String> confirmOrder(@AuthenticationPrincipal User user , @RequestBody OrderRequestDTO dto) {
-        return orderService.confirmOrder(dto.getOrderId() , user.getId());
+    @PostMapping("/confirm-order")
+    public CommonResponse<String> confirmOrder(@AuthenticationPrincipal User user , @Valid @RequestBody CheckCreateDTO createDTO) {
+        return orderService.confirmOrder(createDTO, user );
     }
 
 

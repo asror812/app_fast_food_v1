@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: production
   docker:
     compose:
       lifecycle-management: start_only

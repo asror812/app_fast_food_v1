@@ -1,20 +1,19 @@
 package com.example.app_fast_food.order;
 
 
+import com.example.app_fast_food.bonus.Bonus;
+import com.example.app_fast_food.discount.Discount;
 import com.example.app_fast_food.order.orderItem.OrderItem;
 import com.example.app_fast_food.user.entity.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "`order`")
 @Getter
@@ -38,12 +37,32 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "shipping_cost")
-    private Long shippingCost ;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "order_discount",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "discount_id")
+    )
+    private Set<Discount> discounts;
 
-    @Column(name = "order_price")
-    private Long orderPrice;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "order_bonuses",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "bonus_id")
+    )
+    private Set<Bonus> bonuses;
 
-    @Column(name = "total_price")
-    private Long totalPrice;
+    public Order(UUID id, List<OrderItem> orderItems, OrderStatus orderStatus,
+                 PaymentType paymentType, User user , Set<Discount> discounts,
+                 Set<Bonus> bonuses) {
+        this.id = id;
+        this.orderItems = orderItems;
+        this.orderStatus = orderStatus;
+        this.paymentType = paymentType;
+        this.user = user;
+        this.discounts = discounts;
+        this.bonuses = bonuses;
+    }
+
 }

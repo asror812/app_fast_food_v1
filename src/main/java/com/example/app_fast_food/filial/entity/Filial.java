@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -31,16 +32,16 @@ public class Filial {
     private String destination;
 
     @Column(name = "open_at")
-    private Date openAt;
+    private LocalTime openAt;
 
     @Column(name = "close_at")
-    private Date closeAt;
+    private LocalTime closeAt;
 
     @NotNull @NotBlank
-    private BigDecimal longitude;
+    private Double longitude;
 
     @NotNull @NotBlank
-    private BigDecimal latitude;
+    private Double latitude;
 
     @Enumerated(EnumType.STRING)
     private Region region;

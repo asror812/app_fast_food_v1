@@ -1,16 +1,23 @@
 services:
-  postgres:
-    image: postgres:16
-    container_name: fast_food_db
-    ports:
-      - "9000:5432"
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: fast_food
-  redis:
-    container_name: fast_food-redis
-    image: redis:7.2.4
-    ports:
-      - "6379:6379"
+    spring-app:
+      image: my-spring-app:latests
+      environment:
+        SPRING_DATASOURCE_USERNAME: postgres
+        SPRING_DATASOURCE_PASSWORD: postgres
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fast_food
+      depends_on:
+        - postgres
+        - redis
+    postgres-fast_food:
+      image: postgres:16
+      environment:
+        POSTGRES_DB: fast_food
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+    redis-fast_food:
+      image: redis:7.2.4
+      ports:
+        - "6379:6379"
+
+
 

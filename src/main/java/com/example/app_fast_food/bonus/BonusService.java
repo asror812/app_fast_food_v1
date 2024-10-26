@@ -1,18 +1,15 @@
 package com.example.app_fast_food.bonus;
 
 import com.example.app_fast_food.bonus.dto.BonusCreateDTO;
-import com.example.app_fast_food.bonus.dto.BonusDTO;
 import com.example.app_fast_food.bonus.dto.BonusResponseDTO;
 import com.example.app_fast_food.bonus.dto.BonusUpdateDTO;
 import com.example.app_fast_food.check.CheckRepository;
-import com.example.app_fast_food.common.exceptions.RestException;
 import com.example.app_fast_food.common.response.CommonResponse;
 import com.example.app_fast_food.common.service.GenericService;
 import com.example.app_fast_food.order.Order;
 import com.example.app_fast_food.order.OrderRepository;
-import com.example.app_fast_food.order.dto.OrderRequestDTO;
+import com.example.app_fast_food.order.OrderService;
 import com.example.app_fast_food.order.orderItem.OrderItem;
-import com.example.app_fast_food.order.orderItem.dto.OrderItemRequestDTO;
 import com.example.app_fast_food.product.Product;
 import com.example.app_fast_food.user.UserRepository;
 import com.example.app_fast_food.user.entity.User;
@@ -34,6 +31,7 @@ public class BonusService extends GenericService<Bonus , UUID , BonusResponseDTO
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final CheckRepository checkRepository;
+    private final OrderService orderService;
 
     @Override
     protected CommonResponse<BonusResponseDTO> internalCreate(BonusCreateDTO bonusCreateDTO) {
@@ -45,15 +43,7 @@ public class BonusService extends GenericService<Bonus , UUID , BonusResponseDTO
         return null;
     }
 
-    public CommonResponse<Set<BonusResponseDTO>> getOrderBonuses(UUID userId , UUID orderId)  {
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RestException.EntityNotFoundException("User" , userId.toString()));
-
-        Order order = orderRepository.findOrderById(orderId)
-                .orElseThrow(() -> new RestException.EntityNotFoundException("Order", orderId.toString()));
-
-
+    public Set<Bonus> getOrderBonuses(User user , Order order)  {
         Set<Bonus> applicableBonuses = new HashSet<>();
 
         for (Bonus bonus : repository.findAll()){
@@ -62,7 +52,7 @@ public class BonusService extends GenericService<Bonus , UUID , BonusResponseDTO
             }
         }
 
-        return CommonResponse.succeed(getResponseDTOS(applicableBonuses));
+        return applicableBonuses;
     }
 
     private boolean isBonusApplicable(Bonus bonus, User user, Order order) {
@@ -70,7 +60,7 @@ public class BonusService extends GenericService<Bonus , UUID , BonusResponseDTO
         return switch (bonus.getConditionType()) {
             case HOLIDAY_BONUS, EVENT_BONUS -> true;
             case FIRST_TIME_PURCHASE -> checkRepository.getPurchasesCountOfUser(user.getId()) == 0;
-            case MINIMUM_ORDER_VALUE -> order.getTotalPrice() >= bonus.getConditionValue();
+            case MINIMUM_ORDER_VALUE -> orderService.checkOrderPrice(order , bonus.getConditionValue());
             case PRODUCT_BONUS -> isProductBonusApplicable(bonus, order);
             default -> false;
         };
@@ -87,7 +77,7 @@ public class BonusService extends GenericService<Bonus , UUID , BonusResponseDTO
         return false;
     }
 
-    private Set<BonusResponseDTO> getResponseDTOS(Set<Bonus> bonuses) {
+/*    private Set<BonusResponseDTO> getResponseDTOS(Set<Bonus> bonuses) {
 
         Set<BonusResponseDTO> dtos = new HashSet<>();
         for (Bonus bonus : bonuses) {
@@ -95,5 +85,5 @@ public class BonusService extends GenericService<Bonus , UUID , BonusResponseDTO
         }
 
         return dtos;
-    }
+    }*/
 }

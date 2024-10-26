@@ -43,4 +43,10 @@ public class RestException extends RuntimeException{
            super(s);
         }
     }
+
+    public static class TooFarException extends RestException {
+        public TooFarException(String s) {
+            super(s);
+        }
+    }
 }

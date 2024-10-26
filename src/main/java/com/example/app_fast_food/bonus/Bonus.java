@@ -28,8 +28,7 @@ public class Bonus {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToMany(mappedBy = "bonuses" , fetch = FetchType.LAZY , cascade = {CascadeType.MERGE , CascadeType.PERSIST})
-    @JsonIgnore
+    @OneToMany(mappedBy = "bonuses" ,  fetch = FetchType.LAZY)
     private Set<Product> bonusProducts;
 
     @Enumerated(EnumType.STRING)

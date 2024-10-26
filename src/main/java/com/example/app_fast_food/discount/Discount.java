@@ -1,14 +1,13 @@
 package com.example.app_fast_food.discount;
 
 import com.example.app_fast_food.product.Product;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
@@ -27,7 +26,8 @@ public class Discount {
 
     private String  name;
     private Integer percentage;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     @Column(name = "required_quantity")
     private Integer requiredQuantity;
@@ -36,6 +36,5 @@ public class Discount {
     private boolean isActive ;
 
     @ManyToMany(mappedBy = "discounts" , fetch = FetchType.LAZY , cascade = {CascadeType.MERGE , CascadeType.PERSIST})
-    @JsonIgnore
      private Set<Product> products;
 }

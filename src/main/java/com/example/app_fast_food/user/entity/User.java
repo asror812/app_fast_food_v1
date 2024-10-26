@@ -63,7 +63,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Check> check;
 
-
     @ManyToMany
     @JoinTable(
             name = "user_favorites",
@@ -72,6 +71,8 @@ public class User implements UserDetails {
     )
     public Set<Product> favoriteProducts;
 
+    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
+    @JoinColumn(name = "adress")
     private Address address;
 
     @Override

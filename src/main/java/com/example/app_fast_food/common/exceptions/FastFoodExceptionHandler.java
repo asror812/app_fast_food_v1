@@ -78,6 +78,13 @@ public class FastFoodExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(msg);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<?> handleMethodArgumentNotValidException(RestException.TooFarException e) {
+        String msg = e.getMessage();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(msg);
+    }
+
 /*    @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handle(Exception e) {
         String msg = e.getMessage();

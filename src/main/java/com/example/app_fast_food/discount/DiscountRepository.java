@@ -2,6 +2,8 @@ package com.example.app_fast_food.discount;
 
 import com.example.app_fast_food.common.repository.GenericRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

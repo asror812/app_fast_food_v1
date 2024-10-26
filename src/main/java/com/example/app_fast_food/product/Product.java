@@ -6,7 +6,6 @@ import com.example.app_fast_food.bonus.Bonus;
 import com.example.app_fast_food.category.entity.Category;
 import com.example.app_fast_food.comment.Comment;
 import com.example.app_fast_food.discount.Discount;
-import com.example.app_fast_food.order.Order;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -46,8 +44,7 @@ public class Product {
 
     private Long sold;
 
-
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     @JoinTable(
             name = "product_discounts",
             joinColumns = @JoinColumn(name = "product_id"),
@@ -55,13 +52,9 @@ public class Product {
     )
     private Set<Discount> discounts;
 
-    @ManyToMany
-    @JoinTable(
-            name = "product_bonuses" ,
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "bonus_id")
-    )
-    private Set<Bonus> bonuses;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bonus_id")
+    private Bonus bonus;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Attachment main;

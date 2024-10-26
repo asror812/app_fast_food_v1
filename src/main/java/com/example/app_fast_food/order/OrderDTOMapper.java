@@ -27,10 +27,7 @@ public class OrderDTOMapper extends GenericMapper<Order , OrderCreateDTO, OrderR
 
     @Override
     public OrderResponseDTO toResponseDTO(Order order) {
-        OrderResponseDTO responseDTO = mapper.map(order, OrderResponseDTO.class);
-
-
-        return responseDTO;
+        return mapper.map(order, OrderResponseDTO.class);
     }
 
 

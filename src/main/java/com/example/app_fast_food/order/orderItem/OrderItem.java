@@ -1,6 +1,5 @@
 package com.example.app_fast_food.order.orderItem;
 
-
 import com.example.app_fast_food.order.Order;
 import com.example.app_fast_food.product.Product;
 import jakarta.persistence.*;
@@ -25,14 +24,12 @@ public class OrderItem {
     @NotNull @NotBlank
     private Integer quantity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private Order order;
-
-
 
 }

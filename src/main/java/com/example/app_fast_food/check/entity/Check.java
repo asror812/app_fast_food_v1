@@ -2,6 +2,7 @@ package com.example.app_fast_food.check.entity;
 
 
 import com.example.app_fast_food.filial.entity.Filial;
+import com.example.app_fast_food.order.Order;
 import com.example.app_fast_food.user.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -21,16 +22,27 @@ public class Check {
       @GeneratedValue(strategy = GenerationType.UUID)
       private UUID id;
 
+      @OneToOne()
+      private Order order;
+
       @ManyToOne
       @JoinColumn(name = "user_id" )
       private User user;
+
+      @NotNull @NotBlank
+      private Long totalAmount;
+
+      @NotNull @NotBlank
+      private Long totalDiscount;
+
+      @NotNull @NotBlank
+      private Long totalPrice;
 
       @OneToOne
       @JoinColumn(name = "filial_id" )
       private Filial filial;
 
-      @NotNull @NotBlank
-      private Long totalPrice;
-
       private String courier;
+
+
 }
