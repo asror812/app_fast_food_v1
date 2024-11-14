@@ -1,19 +1,21 @@
 services:
     spring-app:
-      image: my-spring-app:latests
+      image: my-spring-app:0.0.1
       environment:
         SPRING_DATASOURCE_USERNAME: postgres
         SPRING_DATASOURCE_PASSWORD: postgres
-        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fast_food
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-fast_food:5432/fast_food
       depends_on:
-        - postgres
-        - redis
+        - postgres-fast_food
+        - redis-fast_food
     postgres-fast_food:
       image: postgres:16
       environment:
         POSTGRES_DB: fast_food
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
+      ports:
+        - "5433:5433"
     redis-fast_food:
       image: redis:7.2.4
       ports:

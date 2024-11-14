@@ -85,6 +85,9 @@ public class DatabaseInitialDataAdd implements CommandLineRunner {
 
             List<Filial> filials = Arrays.asList(filial1 , filial2 , filial3  ,filial4);
 
+
+            String text = "Hello  world !" ;
+            text.length();
             filialRepository.saveAll(filials);
         }
     }
